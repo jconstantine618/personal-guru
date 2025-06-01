@@ -66,7 +66,7 @@ if st.session_state.current_question:
     st.download_button("📋 Copy Question", st.session_state.current_question, file_name="reflection.txt")
 
     share_text = f"Here's a reflective question I came across:\n\n{st.session_state.current_question}"
-    st.text_area("Shareable Text:", share_text)
+    st.text_area("Shareable Text:", share_text, height=150)
 
 # ---- Journal Entry Section ----
 st.markdown("---")
