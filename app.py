@@ -9,7 +9,7 @@ client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 # ---- App Title ----
 st.set_page_config(page_title="The Still Point", page_icon="🌀", layout="centered")
 st.title("🌀 The Still Point")
-st.caption("One question. One shift.")
+st.caption("One question. One shift of mind.")
 
 # ---- Session State for Archive and Journal ----
 if "archive" not in st.session_state:
@@ -21,7 +21,7 @@ if "journal_entries" not in st.session_state:
 
 # ---- Mood Selector ----
 mood = st.selectbox(
-    "Choose your current state (optional):",
+    "Choose your current state of mind (optional):",
     ("", "Restless", "Overwhelmed", "Disconnected", "Grateful", "Clear")
 )
 
@@ -29,11 +29,12 @@ mood = st.selectbox(
 def build_prompt(mood):
     base_prompt = (
         "Generate a single, reflective question that draws on deep philosophical and spiritual insight. "
-        "Draw from the tone and wisdom found in ancient contemplative texts — the kind that offer paradox, poetic depth, and moral clarity. "
+        "Draw from the tone and wisdom found in ancient contemplative texts — specifically the "wisdom books" of the old testament - the kind that offer paradox, poetic depth, and moral clarity. "
         "Let your question echo the spirit of writings that explore suffering, justice, love, awe, and the mystery of existence. "
         "The question should reframe how one thinks about life, love, purpose, or happiness amid complexity and responsibility. "
         "It should feel timeless, quiet, and expansive — without referencing any specific traditions or teachers. "
         "Assume the person reading it is thoughtful, driven, and often lives in their head. Your goal is to disrupt that gently."
+        "Do not ask the same question twice."
     )
     if mood:
         base_prompt += f" The person is currently feeling {mood.lower()}."
