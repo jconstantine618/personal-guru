@@ -4,7 +4,7 @@ import datetime
 import os
 
 # ---- Configuration ----
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
 # ---- App Title ----
 st.set_page_config(page_title="The Still Point", page_icon="🌀", layout="centered")
@@ -72,19 +72,25 @@ st.subheader("📝 Journal Your Thoughts")
 journal_input = st.text_area("Write your thoughts for today:")
 if st.button("Save Journal Entry"):
     timestamp = datetime.datetime.now().isoformat()
-    st.session_state.journal_entries.insert(0, {"entry": journal_input, "timestamp": timestamp})
+    st.session_state.journal_entries.insert(0, {
+        "entry": journal_input,
+        "timestamp": timestamp,
+        "question": st.session_state.current_question,
+        "mood": mood
+    })
     st.success("Journal entry saved.")
+
+# ---- Sidebar Journal Viewer ----
+st.sidebar.title("📔 Your Journals")
+for i, journal in enumerate(st.session_state.journal_entries):
+    date_str = journal['timestamp'].split('T')[0]
+    label = f"{date_str} ({journal['mood']})" if journal['mood'] else date_str
+    with st.sidebar.expander(label):
+        st.markdown(f"**Question:** {journal['question']}")
+        st.markdown(f"**Entry:**\n{journal['entry']}")
 
 # ---- Archive Section ----
 st.markdown("---")
 st.subheader("📚 Your Archive")
 for entry in st.session_state.archive:
     st.markdown(f"- _{entry['timestamp'].split('T')[0]}_: {entry['question']}")
-
-# ---- Journal Archive ----
-st.markdown("---")
-st.subheader("📔 Your Journal Entries")
-for journal in st.session_state.journal_entries:
-    date_str = journal['timestamp'].split('T')[0]
-    st.markdown(f"**{date_str}**")
-    st.markdown(journal['entry'])
