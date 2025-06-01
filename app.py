@@ -1,10 +1,10 @@
 import streamlit as st
-import openai
+from openai import OpenAI
 import datetime
 import os
 
 # ---- Configuration ----
-openai.api_key = os.getenv("OPENAI_API_KEY")
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 # ---- App Title ----
 st.set_page_config(page_title="The Still Point", page_icon="🌀", layout="centered")
@@ -39,7 +39,7 @@ def build_prompt(mood):
 
 # ---- Generate Question ----
 def get_question(prompt):
-    response = openai.ChatCompletion.create(
+    response = client.chat.completions.create(
         model="gpt-4",
         messages=[
             {"role": "system", "content": "You are a quiet and timeless muse. Speak only in thought-provoking questions."},
