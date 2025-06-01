@@ -86,5 +86,5 @@ st.markdown("---")
 st.subheader("📔 Your Journal Entries")
 for journal in st.session_state.journal_entries:
     date_str = journal['timestamp'].split('T')[0]
-    st.markdown(f"**{date_str}**\n
-{journal['entry']}")
+    st.markdown(f"**{date_str}**")
+    st.markdown(journal['entry'])
