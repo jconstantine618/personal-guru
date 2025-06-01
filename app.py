@@ -29,6 +29,8 @@ mood = st.selectbox(
 def build_prompt(mood):
     base_prompt = (
         "Generate a single, reflective question that draws on deep philosophical and spiritual insight. "
+        "Draw from the tone and wisdom found in ancient contemplative texts — the kind that offer paradox, poetic depth, and moral clarity. "
+        "Let your question echo the spirit of writings that explore suffering, justice, love, awe, and the mystery of existence. "
         "The question should reframe how one thinks about life, love, purpose, or happiness amid complexity and responsibility. "
         "It should feel timeless, quiet, and expansive — without referencing any specific traditions or teachers. "
         "Assume the person reading it is thoughtful, driven, and often lives in their head. Your goal is to disrupt that gently."
