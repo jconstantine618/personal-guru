@@ -12,6 +12,8 @@ st.title("🌀 The Still Point")
 st.caption("One question. One shift.")
 
 # ---- Session State for Archive and Journal ----
+if "journal_box_key" not in st.session_state:
+    st.session_state.journal_box_key = 0
 if "archive" not in st.session_state:
     st.session_state.archive = []
 if "current_question" not in st.session_state:
@@ -113,7 +115,7 @@ if st.session_state.current_question:
 # ---- Journal Entry Section ----
 st.markdown("---")
 st.subheader("📝 Journal Your Thoughts")
-journal_input = st.text_area("Write your thoughts for today:", key="journal_input")
+journal_input = st.text_area("Write your thoughts for today:", key=f"journal_input_{st.session_state.journal_box_key}")
 if st.button("Save Journal Entry"):
     timestamp = datetime.datetime.now().isoformat()
     st.session_state.journal_entries.insert(0, {
@@ -123,8 +125,7 @@ if st.button("Save Journal Entry"):
         "mood": mood
     })
     st.success("Journal entry saved.")
-    if "journal_input" in st.session_state:
-        st.session_state["journal_input"] = ""
+    st.session_state.journal_box_key += 1
 
 # ---- Sidebar Journal Viewer ----
 st.sidebar.title("📔 Your Journals")
