@@ -48,10 +48,10 @@ philosopher = st.selectbox(
 # ---- Prompt Builder ----
 def build_prompt(mood, philosopher):
     base_prompt = (
-        "Generate a single, reflective question that draws on deep philosophical and spiritual insight. "
-        "It should reframe how one thinks about life, love, purpose, or happiness amid complexity and responsibility. "
-        "The question should feel timeless, quiet, and expansive. Assume the person reading it is thoughtful, driven, and often lives in their head. "
-        "Your goal is to disrupt that gently."
+        "Write a single, thoughtful question meant to help someone reflect deeply on their life, choices, and values. "
+        "The question should be poetic but not flowery, direct but not blunt, and layered with meaning. "
+        "It should avoid excessive metaphor or romantic language. Instead, use clean, resonant phrasing that carries depth and emotional clarity. "
+        f"The tone and logic of the question should reflect the voice of {philosopher_options[philosopher]}."
     )
 
     voice_map = {
@@ -71,7 +71,14 @@ def build_prompt(mood, philosopher):
         base_prompt += " " + voice_map[philosopher]
 
     if mood:
-        base_prompt += f" The person is currently feeling {mood.lower()}."
+        base_prompt += (
+            f" The person reading it is currently feeling {mood.lower()}, "
+            "so the question should acknowledge or gently respond to that emotional state."
+        )
+
+    base_prompt += (
+        " The goal is to ask something that breaks through surface thinking and lingers in the reader’s mind — something they’d want to sit with."
+    )
 
     return base_prompt
 
