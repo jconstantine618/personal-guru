@@ -1,4 +1,5 @@
 import streamlit as st
+from streamlit.runtime.scriptrunner import rerun
 from openai import OpenAI
 import datetime
 import os
@@ -123,7 +124,7 @@ if st.button("Save Journal Entry"):
         "mood": mood
     })
     st.success("Journal entry saved.")
-    st.experimental_rerun()
+    rerun()
 
 # ---- Sidebar Journal Viewer ----
 st.sidebar.title("📔 Your Journals")
