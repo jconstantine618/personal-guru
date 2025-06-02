@@ -9,7 +9,7 @@ client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 # ---- App Title ----
 st.set_page_config(page_title="The Still Point", page_icon="🌀", layout="centered")
 st.title("🌀 The Still Point")
-st.caption("One question. One shift of mind.")
+st.caption("One question. One shift.")
 
 # ---- Session State for Archive and Journal ----
 if "archive" not in st.session_state:
@@ -19,25 +19,45 @@ if "current_question" not in st.session_state:
 if "journal_entries" not in st.session_state:
     st.session_state.journal_entries = []
 
-# ---- Mood Selector ----
+# ---- Mood and Philosopher Selectors ----
 mood = st.selectbox(
-    "Choose your current state of mind (optional):",
+    "Choose your current state (optional):",
     ("", "Restless", "Overwhelmed", "Disconnected", "Grateful", "Clear")
 )
 
+philosopher = st.selectbox(
+    "Select a philosophical voice to inspire your question:",
+    ("None", "Socrates", "Laozi", "Buddha", "Jesus", "Rumi", "Confucius", "Marcus Aurelius", "Teresa of Ávila", "Nietzsche", "Solomon")
+)
+
 # ---- Prompt Builder ----
-def build_prompt(mood):
+def build_prompt(mood, philosopher):
     base_prompt = (
         "Generate a single, reflective question that draws on deep philosophical and spiritual insight. "
-        "Draw from the tone and wisdom found in ancient contemplative texts — specifically the wisdom books of the old testament - the kind that offer paradox, poetic depth, and moral clarity. "
-        "Let your question echo the spirit of writings that explore suffering, justice, love, awe, and the mystery of existence. "
-        "The question should reframe how one thinks about life, love, purpose, or happiness amid complexity and responsibility. "
-        "It should feel timeless, quiet, and expansive — without referencing any specific traditions or teachers. "
-        "Assume the person reading it is thoughtful, driven, and often lives in their head. Your goal is to disrupt that gently."
-        "Do not ask the same question twice."
+        "It should reframe how one thinks about life, love, purpose, or happiness amid complexity and responsibility. "
+        "The question should feel timeless, quiet, and expansive. Assume the person reading it is thoughtful, driven, and often lives in their head. "
+        "Your goal is to disrupt that gently."
     )
+
+    voice_map = {
+        "Socrates": "Channel the spirit of Socrates — ask a question that uncovers hidden assumptions, provokes dialogue, and guides the reader toward self-examination.",
+        "Laozi": "Use the voice of Laozi — soft, paradoxical, rooted in nature and non-action, pointing to harmony through simplicity and surrender.",
+        "Buddha": "Speak with the quiet clarity of the Buddha — a question that points toward detachment, mindfulness, compassion, and the impermanence of all things.",
+        "Jesus": "Let the tone reflect the parables and moral paradoxes of Jesus — challenging, upside-down wisdom that elevates love, humility, and soul over status.",
+        "Rumi": "Speak in the poetic, passionate, soul-thirsting voice of Rumi — a question that dances with longing, union, love, and divine mystery.",
+        "Confucius": "Adopt the clear moral logic of Confucius — wise, relational, virtuous, practical; pointing the reader toward integrity in the ordinary.",
+        "Marcus Aurelius": "Channel Marcus Aurelius — calm, reflective, stoic; ask a question that orients the reader toward acceptance, inner strength, and right action.",
+        "Teresa of Ávila": "Ask with the mystical intimacy of Teresa of Ávila — a question that calls the soul inward toward surrender, ecstasy, and divine companionship.",
+        "Nietzsche": "Speak with Nietzsche’s boldness — challenge the reader to confront chaos, self-deception, and power, and to carve meaning with raw authenticity.",
+        "Solomon": "Let the voice be that of Solomon from the wisdom books — paradoxical, regal, full of proverbs and contemplative observations on time, toil, and meaning."
+    }
+
+    if philosopher in voice_map:
+        base_prompt += " " + voice_map[philosopher]
+
     if mood:
         base_prompt += f" The person is currently feeling {mood.lower()}."
+
     return base_prompt
 
 # ---- Generate Question ----
@@ -55,7 +75,7 @@ def get_question(prompt):
 
 # ---- Ask Me a Question Button ----
 if st.button("Ask Me a Question"):
-    prompt = build_prompt(mood)
+    prompt = build_prompt(mood, philosopher)
     question = get_question(prompt)
     st.session_state.current_question = question
     st.session_state.archive.insert(0, {"question": question, "timestamp": datetime.datetime.now().isoformat()})
@@ -63,11 +83,10 @@ if st.button("Ask Me a Question"):
 # ---- Display Current Question ----
 if st.session_state.current_question:
     st.markdown(f"### ❓ {st.session_state.current_question}")
+    if philosopher != "None":
+        st.markdown(f"_Inspired by: **{philosopher}**_")
     st.button("Save to Archive", on_click=lambda: None)  # Already saved on generation
     st.download_button("📋 Copy Question", st.session_state.current_question, file_name="reflection.txt")
-
-    share_text = f"Here's a reflective question I came across:\n\n{st.session_state.current_question}"
-    st.text_area("Shareable Text:", share_text, height=150)
 
 # ---- Journal Entry Section ----
 st.markdown("---")
