@@ -21,7 +21,7 @@ if "journal_entries" not in st.session_state:
 
 # ---- Mood and Philosopher Selectors ----
 mood = st.selectbox(
-    "Choose your current state (optional):",
+    "Choose your current state of mind (optional):",
     ("", "Restless", "Overwhelmed", "Disconnected", "Grateful", "Clear")
 )
 
@@ -123,7 +123,7 @@ if st.button("Save Journal Entry"):
         "mood": mood
     })
     st.success("Journal entry saved.")
-    st.experimental_rerun()
+    st.rerun()
 
 # ---- Sidebar Journal Viewer ----
 st.sidebar.title("📔 Your Journals")
