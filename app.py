@@ -97,7 +97,7 @@ if st.button("Ask Me a Question"):
 
 # ---- Display Current Question ----
 if st.session_state.current_question:
-    st.markdown(f"### ❓ {st.session_state.current_question}")
+    st.markdown(f"### {st.session_state.current_question}")
     if philosopher != "None":
         st.markdown(f"_Inspired by: **{philosopher}**_")
     st.button("Save to Archive", on_click=lambda: None)  # Already saved on generation
