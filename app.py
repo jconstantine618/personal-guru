@@ -1,5 +1,4 @@
 import streamlit as st
-from streamlit.runtime.scriptrunner import rerun
 from openai import OpenAI
 import datetime
 import os
@@ -114,7 +113,7 @@ if st.session_state.current_question:
 # ---- Journal Entry Section ----
 st.markdown("---")
 st.subheader("📝 Journal Your Thoughts")
-journal_input = st.text_area("Write your thoughts for today:")
+journal_input = st.text_area("Write your thoughts for today:", key="journal_input")
 if st.button("Save Journal Entry"):
     timestamp = datetime.datetime.now().isoformat()
     st.session_state.journal_entries.insert(0, {
@@ -124,7 +123,7 @@ if st.button("Save Journal Entry"):
         "mood": mood
     })
     st.success("Journal entry saved.")
-    rerun()
+    st.session_state["journal_input"] = ""
 
 # ---- Sidebar Journal Viewer ----
 st.sidebar.title("📔 Your Journals")
