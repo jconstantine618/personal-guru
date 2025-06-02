@@ -44,7 +44,6 @@ philosopher = st.selectbox(
     options=list(philosopher_options.keys()),
     format_func=lambda key: f"{key} — {philosopher_options[key]}"
 )
-)
 
 # ---- Prompt Builder ----
 def build_prompt(mood, philosopher):
