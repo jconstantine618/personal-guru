@@ -123,7 +123,7 @@ if st.button("Save Journal Entry"):
         "mood": mood
     })
     st.success("Journal entry saved.")
-    st.session_state["journal_input"] = ""
+    del st.session_state["journal_input"]
 
 # ---- Sidebar Journal Viewer ----
 st.sidebar.title("📔 Your Journals")
