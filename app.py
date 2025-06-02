@@ -25,9 +25,25 @@ mood = st.selectbox(
     ("", "Restless", "Overwhelmed", "Disconnected", "Grateful", "Clear")
 )
 
+philosopher_options = {
+    "None": "No specific voice",
+    "Socrates": "Greek philosopher known for the Socratic method and questioning assumptions",
+    "Laozi": "Ancient Chinese sage and founder of Taoism, master of paradox and flow",
+    "Buddha": "Indian prince turned spiritual teacher who taught the path to enlightenment",
+    "Jesus": "Jewish teacher and moral reformer whose parables challenged societal norms",
+    "Rumi": "Persian Sufi poet and mystic exploring divine love and longing",
+    "Confucius": "Chinese philosopher focused on virtue, duty, and moral harmony",
+    "Marcus Aurelius": "Stoic Roman emperor who wrote deeply about self-discipline and fate",
+    "Teresa of Ávila": "Christian mystic whose writings explore the soul’s union with God",
+    "Nietzsche": "Existential philosopher who questioned morality and celebrated self-overcoming",
+    "Solomon": "Biblical king known for his wisdom literature on meaning, time, and toil"
+}
+
 philosopher = st.selectbox(
     "Select a philosophical voice to inspire your question:",
-    ("None", "Socrates", "Laozi", "Buddha", "Jesus", "Rumi", "Confucius", "Marcus Aurelius", "Teresa of Ávila", "Nietzsche", "Solomon")
+    options=list(philosopher_options.keys()),
+    format_func=lambda key: f"{key} — {philosopher_options[key]}"
+)
 )
 
 # ---- Prompt Builder ----
