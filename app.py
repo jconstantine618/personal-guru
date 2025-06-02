@@ -123,6 +123,7 @@ if st.button("Save Journal Entry"):
         "mood": mood
     })
     st.success("Journal entry saved.")
+    st.experimental_rerun()
 
 # ---- Sidebar Journal Viewer ----
 st.sidebar.title("📔 Your Journals")
