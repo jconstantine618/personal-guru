@@ -22,9 +22,14 @@ if "journal_entries" not in st.session_state:
     st.session_state.journal_entries = []
 
 # ---- Mood and Philosopher Selectors ----
+mood_options = (
+    "Restless", "Overwhelmed", "Disconnected", "Anxious", "Stuck", "Numb",
+    "Curious", "Tender", "Grateful", "Hopeful", "Motivated", "Clear", "Sad"
+)
+
 mood = st.selectbox(
     "Choose your current state of mind (optional):",
-    ("", "Restless", "Overwhelmed", "Disconnected", "Grateful", "Clear")
+    options=[""] + list(mood_options)
 )
 
 philosopher_options = {
